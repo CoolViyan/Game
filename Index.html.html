@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2 Player Game</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.js"></script>
+</head>
+<body>
+
+    <script>
+class MyGame extends Phaser.Scene {
+    constructor() {
+        super('game');
+    }
+
+    preload() {
+        // Temporary simple sprites (you can replace with your own images)
+        this.load.image('player1', 'player1.png');
+        this.load.image('player2', 'player2.png');
+    }
+
+    create() {
+        // Create players
+        this.player1 = this.physics.add.sprite(200, 200, 'player1');
+        this.player2 = this.physics.add.sprite(400, 200, 'player2');
+
+        // Player 1 controls (arrow keys)
+        this.cursors = this.input.keyboard.createCursorKeys();
+
+        // Player 2 controls (WASD)
+        this.wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.sKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    }
+
+    update() {
+        // Player 1 controls
+        if (this.cursors.left.isDown) {
+            this.player1.setVelocityX(-200);
+        } else if (this.cursors.right.isDown) {
+            this.player1.setVelocityX(200);
+        } else {
+            this.player1.setVelocityX(0);
+        }
+
+        if (this.cursors.up.isDown) {
+            this.player1.setVelocityY(-200);
+        } else if (this.cursors.down.isDown) {
+            this.player1.setVelocityY(200);
+        } else {
+            this.player1.setVelocityY(0);
+        }
+
+        // Player 2 controls
+        if (this.aKey.isDown) {
+            this.player2.setVelocityX(-200);
+        } else if (this.dKey.isDown) {
+            this.player2.setVelocityX(200);
+        } else {
+            this.player2.setVelocityX(0);
+        }
+
+        if (this.wKey.isDown) {
+            this.player2.setVelocityY(-200);
+        } else if (this.sKey.isDown) {
+            this.player2.setVelocityY(200);
+        } else {
+            this.player2.setVelocityY(0);
+        }
+    }
+}
+
+new Phaser.Game({
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    backgroundColor: '#222',
+    physics: { default: 'arcade' },
+    scene: MyGame
+});
+    </script>
+
+</body>
+</html>
